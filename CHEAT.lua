@@ -1,6 +1,6 @@
 local player = game.Players.LocalPlayer
 local gui = Instance.new("ScreenGui")
-gui.Name = "SYNDICATEKeySystem"
+gui.Name = "1KKeySystem"
 gui.ResetOnSpawn = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
@@ -23,7 +23,7 @@ Instance.new("UICorner",frame).CornerRadius = UDim.new(0,10)
 local skullBg = Instance.new("ImageLabel")
 skullBg.Size = UDim2.new(1,0,1,0)
 skullBg.BackgroundTransparency = 1
-skullBg.Image = "rbxassetid://85680685047977"
+skullBg.Image = "rbxassetid://70881478666974"
 skullBg.ScaleType = Enum.ScaleType.Crop
 skullBg.ZIndex = 0
 skullBg.Parent = frame
@@ -32,7 +32,7 @@ local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1,-20,0,40)
 title.Position = UDim2.new(0,10,0,10)
 title.BackgroundTransparency = 1
-title.Text = "SYNDICATE MAIN CHEAT"
+title.Text = "1KMISTRAL MAIN CHEAT"
 title.Font = Enum.Font.GothamBold
 title.TextSize = 22
 title.TextColor3 = Color3.fromRGB(255,255,255)
@@ -106,7 +106,7 @@ btn.MouseButton1Click:Connect(function()
         logo.Position = UDim2.new(0.5,0,0.5,0)
         logo.Size = UDim2.new(0.6,0,0.6,0)
         logo.BackgroundTransparency = 1
-        logo.Image = "rbxassetid://137546567120629" -- Logo ID
+        logo.Image = "rbxassetid://70881478666974" -- Logo ID
         logo.ImageTransparency = 1
         logo.Parent = introGui
 
