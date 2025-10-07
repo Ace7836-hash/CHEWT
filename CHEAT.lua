@@ -1,211 +1,169 @@
---// ✅ FULL DRAGGABLE KEY SYSTEM + LOADING SCREEN + SAFE REMOTE LOADER
--- CONFIG
-local CORRECT_KEY = "1KMISTRAL-F578-R77-ZUYBES9"
-
-local IMAGE_ID = "rbxassetid://82042432110372" -- loading/key image
-local REMOTE_SCRIPT_URL = "https://raw.githubusercontent.com/Ace7836-hash/Mk/refs/heads/main/script.lua.lua"
--- Services
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
-local TweenService = game:GetService("TweenService")
-
--- util: trim
-local function trim(s) return (s:gsub("^%s*(.-)%s*$", "%1")) end
-
--- Remove any previous UI
-if PlayerGui:FindFirstChild("KeySystemUI") then
-    PlayerGui.KeySystemUI:Destroy()
-end
-
--- Create ScreenGui
+local player = game.Players.LocalPlayer
 local gui = Instance.new("ScreenGui")
-gui.Name = "KeySystemUI"
-gui.Parent = PlayerGui
+gui.Name = "SYNDICATEKeySystem"
 gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
 
--- Main draggable frame
+local sound = Instance.new("Sound")
+sound.SoundId = "rbxassetid://17208361335"
+sound.Volume = 1
+sound.Parent = gui
+sound:Play()
+
+
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 420, 0, 230)
-frame.Position = UDim2.new(0.5, -210, 0.5, -115)
-frame.BackgroundColor3 = Color3.fromRGB(15,15,15)
+frame.Size = UDim2.new(0,400,0,200)
+frame.Position = UDim2.new(0.5,-200,0.5,-110)
+frame.BackgroundColor3 = Color3.fromRGB(20,20,20)
 frame.BorderSizePixel = 0
-frame.Active = true
-frame.Draggable = true -- draggable
+frame.BackgroundTransparency = 0.1
 frame.Parent = gui
-Instance.new("UICorner", frame)
+Instance.new("UICorner",frame).CornerRadius = UDim.new(0,10)
 
--- Background image (subtle)
-local bg = Instance.new("ImageLabel")
-bg.Size = UDim2.new(1,0,1,0)
-bg.Position = UDim2.new(0,0,0,0)
-bg.BackgroundTransparency = 1
-bg.Image = IMAGE_ID
-bg.ImageTransparency = 0.15
-bg.Parent = frame
+local skullBg = Instance.new("ImageLabel")
+skullBg.Size = UDim2.new(1,0,1,0)
+skullBg.BackgroundTransparency = 1
+skullBg.Image = "rbxassetid://85680685047977"
+skullBg.ScaleType = Enum.ScaleType.Crop
+skullBg.ZIndex = 0
+skullBg.Parent = frame
 
--- Title
 local title = Instance.new("TextLabel")
-title.Size = UDim2.new(1, -20, 0, 42)
-title.Position = UDim2.new(0, 10, 0, 6)
+title.Size = UDim2.new(1,-20,0,40)
+title.Position = UDim2.new(0,10,0,10)
 title.BackgroundTransparency = 1
-title.Text = "1KMI$TRAL KEY SYSTEM"
+title.Text = "SYNDICATE MAIN CHEAT"
 title.Font = Enum.Font.GothamBold
-title.TextSize = 20
+title.TextSize = 22
 title.TextColor3 = Color3.fromRGB(255,255,255)
 title.TextXAlignment = Enum.TextXAlignment.Left
+title.ZIndex = 1
 title.Parent = frame
 
--- Key TextBox
-local box = Instance.new("TextBox")
-box.Size = UDim2.new(0.85, 0, 0, 44)
-box.Position = UDim2.new(0.075, 0, 0.45, 0)
-box.PlaceholderText = "TextButton"
-box.Text = ""
-box.Font = Enum.Font.Gotham
-box.TextSize = 18
-box.BackgroundColor3 = Color3.fromRGB(30,30,30)
-box.TextColor3 = Color3.fromRGB(255,255,255)
-box.ClearTextOnFocus = false
-Instance.new("UICorner", box)
-box.Parent = frame
+local sub = Instance.new("TextLabel")
+sub.Size = UDim2.new(1,-20,0,20)
+sub.Position = UDim2.new(0,10,0,45)
+sub.BackgroundTransparency = 1
+sub.Text = "KEY SYSTEM"
+sub.Font = Enum.Font.Gotham
+sub.TextSize = 16
+sub.TextColor3 = Color3.fromRGB(200,200,200)
+sub.TextXAlignment = Enum.TextXAlignment.Left
+sub.ZIndex = 1
+sub.Parent = frame
 
--- Submit Button
+local keyBox = Instance.new("TextBox")
+keyBox.Size = UDim2.new(0.9,0,0,40)
+keyBox.Position = UDim2.new(0.05,0,0.45,-20)
+keyBox.BackgroundColor3 = Color3.fromRGB(30,30,30)
+keyBox.TextColor3 = Color3.fromRGB(255,255,255)
+keyBox.PlaceholderText = "Enter key here..."
+keyBox.Font = Enum.Font.Gotham
+keyBox.TextSize = 16
+keyBox.ZIndex = 1
+keyBox.Parent = frame
+Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0,6)
+
+local errorLabel = Instance.new("TextLabel")
+errorLabel.Size = UDim2.new(1,0,0,20)
+errorLabel.Position = UDim2.new(0,0,0.62,0)
+errorLabel.BackgroundTransparency = 1
+errorLabel.Text = ""
+errorLabel.Font = Enum.Font.Gotham
+errorLabel.TextSize = 14
+errorLabel.TextColor3 = Color3.fromRGB(255,70,70)
+errorLabel.ZIndex = 1
+errorLabel.Parent = frame
+
 local btn = Instance.new("TextButton")
-btn.Size = UDim2.new(0.85,0,0,44)
-btn.Position = UDim2.new(0.075,0,0.7,0)
-btn.Text = "SUBMIT KEY"
-btn.Font = Enum.Font.GothamBold
-btn.TextSize = 20
-btn.BackgroundColor3 = Color3.fromRGB(40,120,40)
+btn.Size = UDim2.new(0.9,0,0,40)
+btn.Position = UDim2.new(0.05,0,0.85,-20)
+btn.BackgroundColor3 = Color3.fromRGB(40,40,40)
+btn.Text = "ENTER KEY"
 btn.TextColor3 = Color3.fromRGB(255,255,255)
-Instance.new("UICorner", btn)
+btn.Font = Enum.Font.GothamBold
+btn.TextSize = 18
+btn.ZIndex = 1
 btn.Parent = frame
+Instance.new("UICorner", btn).CornerRadius = UDim.new(0,6)
 
--- Status label
-local status = Instance.new("TextLabel")
-status.Size = UDim2.new(1, -20, 0, 24)
-status.Position = UDim2.new(0, 10, 1, -28)
-status.BackgroundTransparency = 1
-status.Text ="KEY SYSTEM"
-status.Font = Enum.Font.Gotham
-status.TextSize = 16
-status.TextColor3 = Color3.fromRGB(255,255,255)
-status.TextXAlignment = Enum.TextXAlignment.Left
-status.Parent = frame
+local CorrectKey = "1KMISTRAL-F578-R77-ZUYBES9"
 
--- helper: show status (auto clear optional)
-local function setStatus(text, color, timeout)
-    status.Text = text or ""
-    if color then status.TextColor3 = color end
-    if timeout and timeout > 0 then
-        spawn(function()
-            wait(timeout)
-            if status then status.Text = "" end
+btn.MouseButton1Click:Connect(function()
+	if keyBox.Text == CorrectKey then
+		gui:Destroy() -- tanggal key system
+
+        
+        local TweenService = game:GetService("TweenService")
+        local introGui = Instance.new("ScreenGui")
+        introGui.Name = "IntroLogo"
+        introGui.IgnoreGuiInset = true
+        introGui.ResetOnSpawn = false
+        introGui.Parent = player:WaitForChild("PlayerGui")
+
+        local logo = Instance.new("ImageLabel")
+        logo.AnchorPoint = Vector2.new(0.5,0.5)
+        logo.Position = UDim2.new(0.5,0,0.5,0)
+        logo.Size = UDim2.new(0.6,0,0.6,0)
+        logo.BackgroundTransparency = 1
+        logo.Image = "rbxassetid://137546567120629" -- Logo ID
+        logo.ImageTransparency = 1
+        logo.Parent = introGui
+
+        -- Fade In
+        TweenService:Create(logo, TweenInfo.new(1), {ImageTransparency = 0}):Play()
+        task.wait(5)
+
+        -- Fade Out
+        local fadeOut = TweenService:Create(logo, TweenInfo.new(1), {ImageTransparency = 1})
+        fadeOut:Play()
+        fadeOut.Completed:Connect(function()
+            introGui:Destroy()
+
+loadstring(game:HttpGet(''))()
         end)
-    end
-end
-
--- function to load remote script safely
-local function loadRemoteScript()
-    -- small wait to ensure UI destroyed
-    wait(0.08)
-    local ok, err = pcall(function()
-        -- try to fetch & run remote script
-        local code = game:HttpGet(REMOTE_SCRIPT_URL)
-        local fn = loadstring(code)
-        if type(fn) == "function" then
-            fn()
-        else
-            error("loadstring returned non-function")
-        end
-    end)
-    if not ok then
-        warn("[KeyLoader] Failed to load remote script:", err)
-        setStatus("Failed to load menu: "..tostring(err), Color3.fromRGB(255,80,80))
-    end
-end
-
--- show loading screen (centered small card)
-local function showLoadingAndThenLoad()
-    local loadingGui = Instance.new("ScreenGui")
-    loadingGui.Name = "LoadingUI"
-    loadingGui.Parent = PlayerGui
-    loadingGui.ResetOnSpawn = false
-
-    local lFrame = Instance.new("Frame")
-    lFrame.Size = UDim2.new(0, 360, 0, 240)
-    lFrame.Position = UDim2.new(0.5, -180, 0.5, -120)
-    lFrame.BackgroundColor3 = Color3.fromRGB(18,18,18)
-    lFrame.BorderSizePixel = 0
-    Instance.new("UICorner", lFrame)
-    lFrame.Parent = loadingGui
-
-    local lImg = Instance.new("ImageLabel")
-    lImg.Size = UDim2.new(0.9,0,0.75,0)
-    lImg.Position = UDim2.new(0.05,0,0.05,0)
-    lImg.BackgroundTransparency = 1
-    lImg.Image = IMAGE_ID
-    lImg.Parent = lFrame
-
-    local lTxt = Instance.new("TextLabel")
-    lTxt.Size = UDim2.new(1,0,0,36)
-    lTxt.Position = UDim2.new(0,0,0.82,0)
-    lTxt.BackgroundTransparency = 1
-    lTxt.Text = ""
-    lTxt.Font = Enum.Font.GothamBold
-    lTxt.TextColor3 = Color3.fromRGB(255,255,255)
-    lTxt.TextSize = 20
-    lTxt.Parent = lFrame
-
-    -- optional fade-in tween
-    pcall(function()
-        TweenService:Create(lFrame, TweenInfo.new(0.35, Enum.EasingStyle.Sine), {BackgroundTransparency = 0}):Play()
-    end)
-
-    -- show for a few seconds then destroy and load remote
-    spawn(function()
-        wait(2.5)
-        pcall(function() loadingGui:Destroy() end)
-        loadRemoteScript()
-    end)
-end
-
--- Submission logic
-local function submitKey(k)
-    local key = trim(k or box.Text or "")
-    if key == "" then
-        setStatus("", Color3.fromRGB(255,140,0), 2)
-        return
-    end
-
-    if key == CORRECT_KEY then
-        setStatus("", Color3.fromRGB(100,220,120))
-        -- small animation: fade out frame
-        pcall(function()
-            TweenService:Create(frame, TweenInfo.new(0.6, Enum.EasingStyle.Sine), {BackgroundTransparency = 1}):Play()
-            TweenService:Create(bg, TweenInfo.new(0.6, Enum.EasingStyle.Sine), {ImageTransparency = 1}):Play()
-        end)
-        wait(0.6)
-        pcall(function() gui:Destroy() end)
-        showLoadingAndThenLoad()
-    else
-        setStatus("", Color3.fromRGB(255,80,80), 2)
-        box.Text = ""
-        box.PlaceholderText = "❌ Invalid key please try again"
-    end
-end
-
--- Connect submit button and Enter key
-btn.MouseButton1Click:Connect(function() submitKey(box.Text) end)
-box.FocusLost:Connect(function(enterPressed)
-    if enterPressed then submitKey(box.Text) end
+	else
+		errorLabel.Text = "❌Wrong Key!"
+		task.wait(2)
+		errorLabel.Text = ""
+	end
 end)
 
--- initial focus
-spawn(function()
-    wait(0.1)
-    pcall(function() box:CaptureFocus() end)
+local UserInputService = game:GetService("UserInputService")
+local dragging, dragInput, dragStart, startPos
+
+local function update(input)
+	local delta = input.Position - dragStart
+	frame.Position = UDim2.new(
+		startPos.X.Scale,
+		startPos.X.Offset + delta.X,
+		startPos.Y.Scale,
+		startPos.Y.Offset + delta.Y
+	)
+end
+
+frame.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = frame.Position
+
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
 end)
 
-print("[KeySystem] Loaded. Waiting for key.")
+frame.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		dragInput = input
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if input == dragInput and dragging then
+		update(input)
+	end
+end)
