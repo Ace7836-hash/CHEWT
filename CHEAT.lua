@@ -120,7 +120,7 @@ btn.MouseButton1Click:Connect(function()
         fadeOut.Completed:Connect(function()
             introGui:Destroy()
 
-loadstring(game:HttpGet(''))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Ace7836-hash/Mk/refs/heads/main/script.lua.lua'))()
         end)
 	else
 		errorLabel.Text = "❌Wrong Key!"
