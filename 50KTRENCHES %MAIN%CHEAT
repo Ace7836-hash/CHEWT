@@ -1,6 +1,6 @@
 local player = game.Players.LocalPlayer
 local gui = Instance.new("ScreenGui")
-gui.Name = "1KKeySystem"
+gui.Name = "50KKeySystem"
 gui.ResetOnSpawn = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
@@ -32,7 +32,7 @@ local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1,-20,0,40)
 title.Position = UDim2.new(0,10,0,10)
 title.BackgroundTransparency = 1
-title.Text = "1KMISTRAL MAIN CHEAT"
+title.Text = "50KTRENCHES MAIN CHEAT"
 title.Font = Enum.Font.GothamBold
 title.TextSize = 22
 title.TextColor3 = Color3.fromRGB(255,255,255)
@@ -87,7 +87,7 @@ btn.ZIndex = 1
 btn.Parent = frame
 Instance.new("UICorner", btn).CornerRadius = UDim.new(0,6)
 
-local CorrectKey = "1KMISTRAL-F578-R77-ZUYBES9"
+local CorrectKey = "JOHNJOHN-50K-50KTRENCHES-CHAMPZ898-TFGH78"
 
 btn.MouseButton1Click:Connect(function()
 	if keyBox.Text == CorrectKey then
@@ -120,10 +120,10 @@ btn.MouseButton1Click:Connect(function()
         fadeOut.Completed:Connect(function()
             introGui:Destroy()
 
-loadstring(game:HttpGet('https://raw.githubusercontent.com/Ace7836-hash/Mk/refs/heads/main/script.lua.lua'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Ace7836-hash/50KTRENCHES-MAIN-CHEAT/refs/heads/main/50KTRENCHES%20%25MAIN%20%25CHEAT'))()
         end)
 	else
-		errorLabel.Text = "❌Wrong Key!"
+		errorLabel.Text = "❌Invalid key `try again!"
 		task.wait(2)
 		errorLabel.Text = ""
 	end
