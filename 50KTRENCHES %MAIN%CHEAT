@@ -87,7 +87,7 @@ btn.ZIndex = 1
 btn.Parent = frame
 Instance.new("UICorner", btn).CornerRadius = UDim.new(0,6)
 
-local CorrectKey = "JOHNJOHN-50K-50KTRENCHES-CHAMPZ898-TFGH78"
+local CorrectKey = "JOHN-TF5-G-77-67"
 
 btn.MouseButton1Click:Connect(function()
 	if keyBox.Text == CorrectKey then
